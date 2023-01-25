@@ -47,34 +47,34 @@ class _MyHomePageState extends State<MyHomePage> {
             width: 320,
             child: Column(
               children: [
-                SizedBox(
+                const SizedBox(
                   height: 21,
                 ),
-                Text(
-                  "Please enter details below to calculate pay",
+                const Text(
+                  "Enter details below to get pay report.",
                   style: TextStyle(fontSize: 15, fontWeight: FontWeight.w400),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 31,
                 ),
                 TextField(
                   controller: numOfHourController,
-                  decoration: InputDecoration(
+                  decoration: const InputDecoration(
                       label: Text("Number of hours"),
                       prefixIcon: Icon(Icons.timelapse)),
                   keyboardType: TextInputType.number,
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 21,
                 ),
                 TextField(
                   controller: hourlyRateController,
-                  decoration: InputDecoration(
+                  decoration: const InputDecoration(
                       label: Text("Hourly rate"),
                       prefixIcon: Icon(Icons.money)),
                   keyboardType: TextInputType.number,
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 25,
                 ),
                 SizedBox(
@@ -88,14 +88,14 @@ class _MyHomePageState extends State<MyHomePage> {
                           showDialog(
                               context: context,
                               builder: (context) => AlertDialog(
-                                    title: Text("Error"),
-                                    content: Text("Fields cannot be empty!"),
+                                    title: const Text("Error"),
+                                    content: const Text("Fields cannot be empty!"),
                                     actions: [
                                       TextButton(
                                           onPressed: () {
                                             Navigator.pop(context);
                                           },
-                                          child: Text("Ok"))
+                                          child: const Text("Ok"))
                                     ],
                                   ));
                         } else {
@@ -110,23 +110,26 @@ class _MyHomePageState extends State<MyHomePage> {
                           });
                         }
                       },
-                      child: Text("Calculate"),
                       style: ElevatedButton.styleFrom(
                           elevation: 10,
                           backgroundColor: Colors.pink,
-                          textStyle: TextStyle(fontSize: 20)),
+                          textStyle: const TextStyle(fontSize: 20)),
+                      child: const Text("Calculate"),
                     )),
-                SizedBox(
+                const SizedBox(
                   height: 31,
                 ),
-                Text(
+                const Text(
                   "REPORT",
-                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 22, color: Colors.black54),
+                  style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 22,
+                      color: Colors.black54),
                 ),
-                Divider(
+                const Divider(
                   color: Colors.black12,
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 20,
                 ),
                 Container(
@@ -136,36 +139,67 @@ class _MyHomePageState extends State<MyHomePage> {
                     children: [
                       Text(
                         "Regular Pay: $regularPay",
-                        style: TextStyle(
-                            fontWeight: FontWeight.w400, fontSize: 18, color: Colors.black54),
+                        style: const TextStyle(
+                            fontWeight: FontWeight.w400,
+                            fontSize: 18,
+                            color: Colors.black54),
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 10,
                       ),
                       Text(
                         "Overtime Pay: $overtimePay",
-                        style: TextStyle(
-                            fontWeight: FontWeight.w400, fontSize: 18, color: Colors.black54),
+                        style: const TextStyle(
+                            fontWeight: FontWeight.w400,
+                            fontSize: 18,
+                            color: Colors.black54),
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 10,
                       ),
                       Text(
                         "Total Pay: $totalPay",
-                        style: TextStyle(
-                            fontWeight: FontWeight.w400, fontSize: 18, color: Colors.black54),
+                        style: const TextStyle(
+                            fontWeight: FontWeight.w400,
+                            fontSize: 18,
+                            color: Colors.black54),
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 10,
                       ),
                       Text(
                         "Tax: $tax",
-                        style: TextStyle(
-                            fontWeight: FontWeight.w400, fontSize: 18, color: Colors.black54),
+                        style: const TextStyle(
+                            fontWeight: FontWeight.w400,
+                            fontSize: 18,
+                            color: Colors.black54),
                       ),
                     ],
                   ),
-                )
+                ),
+                const SizedBox(
+                  height: 120,
+                ),
+                const Divider(
+                  color: Colors.black12,
+                ),
+                const Text(
+                  "Author: Himanshu",
+                  style: TextStyle(
+                      fontWeight: FontWeight.w400,
+                      fontSize: 14,
+                      color: Colors.black54),
+                ),
+                const SizedBox(
+                  height: 5,
+                ),
+                const Text(
+                  "Student ID: 301296001",
+                  style: TextStyle(
+                      fontWeight: FontWeight.w400,
+                      fontSize: 14,
+                      color: Colors.black54),
+                ),
               ],
             ),
           ),
@@ -184,15 +218,6 @@ class _MyHomePageState extends State<MyHomePage> {
           (double.parse(overtimePay) + double.parse(regularPay)).toString();
       tax = (double.parse(totalPay) * 0.18).toString();
     }
-
-    debugPrint("Regular Pay: " +
-        regularPay +
-        ", Overtime Pay: " +
-        overtimePay +
-        " Total Pay: " +
-        totalPay +
-        " Tax: " +
-        tax);
     numOfHourController.text = "";
     hourlyRateController.text = "";
   }
