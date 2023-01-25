@@ -1,0 +1,199 @@
+import 'package:flutter/material.dart';
+
+void main() {
+  runApp(const MyApp());
+}
+
+class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
+  // This widget is the root of your application.
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      title: 'Flutter Demo',
+      debugShowCheckedModeBanner: false,
+      theme: ThemeData(
+        primarySwatch: Colors.blue,
+      ),
+      home: const MyHomePage(),
+    );
+  }
+}
+
+class MyHomePage extends StatefulWidget {
+  const MyHomePage({Key? key}) : super(key: key);
+
+  @override
+  State<MyHomePage> createState() => _MyHomePageState();
+}
+
+class _MyHomePageState extends State<MyHomePage> {
+  var numOfHourController = TextEditingController();
+  var hourlyRateController = TextEditingController();
+  var regularPay = "0.0";
+  var overtimePay = "0.0";
+  var totalPay = "0.0";
+  var tax = "0.0";
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+        appBar: AppBar(
+          title: Text("Pay Calculator"),
+        ),
+        body: Center(
+          child: Container(
+            width: 320,
+            child: Column(
+              children: [
+                SizedBox(
+                  height: 21,
+                ),
+                Text(
+                  "Please enter details below to calculate pay",
+                  style: TextStyle(fontSize: 15, fontWeight: FontWeight.w400),
+                ),
+                SizedBox(
+                  height: 31,
+                ),
+                TextField(
+                  controller: numOfHourController,
+                  decoration: InputDecoration(
+                      label: Text("Number of hours"),
+                      prefixIcon: Icon(Icons.timelapse)),
+                  keyboardType: TextInputType.number,
+                ),
+                SizedBox(
+                  height: 21,
+                ),
+                TextField(
+                  controller: hourlyRateController,
+                  decoration: InputDecoration(
+                      label: Text("Hourly rate"),
+                      prefixIcon: Icon(Icons.money)),
+                  keyboardType: TextInputType.number,
+                ),
+                SizedBox(
+                  height: 25,
+                ),
+                SizedBox(
+                    width: 150.0,
+                    height: 48,
+                    child: ElevatedButton(
+                      onPressed: () {
+                        var numOfHours = numOfHourController.text.toString();
+                        var hourlyRate = hourlyRateController.text.toString();
+                        if (numOfHours == "" || hourlyRate == "") {
+                          showDialog(
+                              context: context,
+                              builder: (context) => AlertDialog(
+                                    title: Text("Error"),
+                                    content: Text("Fields cannot be empty!"),
+                                    actions: [
+                                      TextButton(
+                                          onPressed: () {
+                                            Navigator.pop(context);
+                                          },
+                                          child: Text("Ok"))
+                                    ],
+                                  ));
+                        } else {
+                          debugPrint("Hello there");
+                          calculateReport(double.parse(numOfHours),
+                              double.parse(hourlyRate));
+                          setState(() {
+                            regularPay = "\$$regularPay";
+                            overtimePay = "\$$overtimePay";
+                            totalPay = "\$$totalPay";
+                            tax = "\$$tax";
+                          });
+                        }
+                      },
+                      child: Text("Calculate"),
+                      style: ElevatedButton.styleFrom(
+                          elevation: 10,
+                          backgroundColor: Colors.pink,
+                          textStyle: TextStyle(fontSize: 20)),
+                    )),
+                SizedBox(
+                  height: 31,
+                ),
+                Text(
+                  "REPORT",
+                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 22, color: Colors.black54),
+                ),
+                Divider(
+                  color: Colors.black12,
+                ),
+                SizedBox(
+                  height: 20,
+                ),
+                Container(
+                  width: 300,
+                  alignment: Alignment.center,
+                  child: Column(
+                    children: [
+                      Text(
+                        "Regular Pay: $regularPay",
+                        style: TextStyle(
+                            fontWeight: FontWeight.w400, fontSize: 18, color: Colors.black54),
+                      ),
+                      SizedBox(
+                        height: 10,
+                      ),
+                      Text(
+                        "Overtime Pay: $overtimePay",
+                        style: TextStyle(
+                            fontWeight: FontWeight.w400, fontSize: 18, color: Colors.black54),
+                      ),
+                      SizedBox(
+                        height: 10,
+                      ),
+                      Text(
+                        "Total Pay: $totalPay",
+                        style: TextStyle(
+                            fontWeight: FontWeight.w400, fontSize: 18, color: Colors.black54),
+                      ),
+                      SizedBox(
+                        height: 10,
+                      ),
+                      Text(
+                        "Tax: $tax",
+                        style: TextStyle(
+                            fontWeight: FontWeight.w400, fontSize: 18, color: Colors.black54),
+                      ),
+                    ],
+                  ),
+                )
+              ],
+            ),
+          ),
+        ));
+  }
+
+  void calculateReport(double noh, double hr) {
+    if (noh <= 40) {
+      totalPay = (noh * hr).toString();
+      regularPay = totalPay;
+      tax = (double.parse(regularPay) * 0.18).toString();
+    } else if (noh > 40) {
+      overtimePay = ((noh - 40) * hr * 1.5).toString();
+      regularPay = (40 * hr).toString();
+      totalPay =
+          (double.parse(overtimePay) + double.parse(regularPay)).toString();
+      tax = (double.parse(totalPay) * 0.18).toString();
+    }
+
+    debugPrint("Regular Pay: " +
+        regularPay +
+        ", Overtime Pay: " +
+        overtimePay +
+        " Total Pay: " +
+        totalPay +
+        " Tax: " +
+        tax);
+    numOfHourController.text = "";
+    hourlyRateController.text = "";
+  }
+}
