@@ -11,10 +11,10 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      title: 'Pay Calculator',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
-        primarySwatch: Colors.blue,
+        primarySwatch: Colors.deepOrange,
       ),
       home: const MyHomePage(),
     );
@@ -112,7 +112,7 @@ class _MyHomePageState extends State<MyHomePage> {
                       },
                       style: ElevatedButton.styleFrom(
                           elevation: 10,
-                          backgroundColor: Colors.pink,
+                          backgroundColor: Colors.deepOrange,
                           textStyle: const TextStyle(fontSize: 20)),
                       child: const Text("Calculate"),
                     )),
@@ -210,13 +210,14 @@ class _MyHomePageState extends State<MyHomePage> {
     if (noh <= 40) {
       totalPay = (noh * hr).toString();
       regularPay = totalPay;
+      overtimePay = "0.0";
       tax = (double.parse(regularPay) * 0.18).toString();
     } else if (noh > 40) {
       overtimePay = ((noh - 40) * hr * 1.5).toString();
       regularPay = (40 * hr).toString();
       totalPay =
           (double.parse(overtimePay) + double.parse(regularPay)).toString();
-      tax = (double.parse(totalPay) * 0.18).toString();
+      tax = (double.parse(totalPay) * 0.18).toStringAsFixed(2);
     }
     numOfHourController.text = "";
     hourlyRateController.text = "";
